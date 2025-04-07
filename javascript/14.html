@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="password"], input[type="email"], input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>Registration Form</h2>
+    <form id="registrationForm" onsubmit="return validateForm()">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name">
+        </div>
+        
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username">
+            <div id="usernameError" class="error"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+            <div id="passwordError" class="error"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword">
+            <div id="confirmPasswordError" class="error"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="birthYear">Year of Birth:</label>
+            <input type="number" id="birthYear" name="birthYear" min="1900" max="2000">
+            <div id="birthYearError" class="error"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+            <div id="emailError" class="error"></div>
+        </div>
+        
+        <div class="form-group">
+            <input type="checkbox" id="terms" name="terms">
+            <label for="terms" style="display: inline;">I agree to the terms and conditions</label>
+            <div id="termsError" class="error"></div>
+        </div>
+        
+        <button type="submit">Register</button>
+    </form>
+
+    <script>
+        function validateForm() {
+            // Reset errors
+            document.querySelectorAll('.error').forEach(el => el.textContent = '');
+            
+            let isValid = true;
+            
+            // Username validation
+            const username = document.getElementById('username').value;
+            if (username.trim() === '') {
+                document.getElementById('usernameError').textContent = 'Username is required';
+                isValid = false;
+            }
+            
+            // Password validation
+            const password = document.getElementById('password').value;
+            if (password.trim() === '') {
+                document.getElementById('passwordError').textContent = 'Password is required';
+                isValid = false;
+            }
+            
+            // Confirm password validation
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            if (confirmPassword.trim() === '') {
+                document.getElementById('confirmPasswordError').textContent = 'Confirm password is required';
+                isValid = false;
+            } else if (confirmPassword !== password) {
+                document.getElementById('confirmPasswordError').textContent = 'Passwords do not match';
+                isValid = false;
+            }
+            
+            // Birth year validation
+            const birthYear = document.getElementById('birthYear').value;
+            if (!birthYear) {
+                document.getElementById('birthYearError').textContent = 'Year of birth is required';
+                isValid = false;
+            } else if (!/^\d{4}$/.test(birthYear)) {
+                document.getElementById('birthYearError').textContent = 'Year must be four digits';
+                isValid = false;
+            } else if (birthYear < 1900 || birthYear > 2000) {
+                document.getElementById('birthYearError').textContent = 'Year must be between 1900 and 2000';
+                isValid = false;
+            }
+            
+            // Email validation
+            const email = document.getElementById('email').value;
+            if (email.trim() === '') {
+                document.getElementById('emailError').textContent = 'Email is required';
+                isValid = false;
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                document.getElementById('emailError').textContent = 'Email is not in a valid format';
+                isValid = false;
+            }
+            
+            // Terms checkbox validation
+            const termsChecked = document.getElementById('terms').checked;
+            if (!termsChecked) {
+                document.getElementById('termsError').textContent = 'You must agree to the terms and conditions';
+                isValid = false;
+            }
+            
+            if (isValid) {
+                alert('Registration successful!');
+                // You would typically submit the form to a server here
+            }
+            
+            return isValid;
+        }
+    </script>
+</body>
+</html></html>

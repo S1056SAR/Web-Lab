@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive JavaScript Quiz by Amit</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .quiz-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .result-display {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2c3e50;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #ecf0f1;
+            margin-top: 20px;
+        }
+        .timer {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        .highlight {
+            background-color: #ffffcc;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    </style>
+    <script>
+        let score = 0;
+        let timeLeft = 60;
+        let timerInterval;
+        
+        const startTimer = () => {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').textContent = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    endQuiz();
+                }
+            }, 1000);
+        };
+        
+        function pehla() {
+            let ans = prompt("Which programming language is known as the 'language of the web'?");
+            if (ans.toLowerCase() === "javascript") {
+                score += 1;
+                console.log("Bingo");
+                updateScore("Question 1: Correct! JavaScript is the answer.");
+            } else {
+                console.log("Woops");
+                updateScore("Question 1: Wrong! The correct answer is JavaScript.");
+            }
+        }
+        
+        function doosra() {
+            let ans = prompt("What symbol is used for single-line comments in JavaScript?");
+            if (ans === "//") {
+                score += 1;
+                console.log("Bingo!");
+                updateScore("Question 2: Correct! // is the answer.");
+            } else {
+                console.log("Woops!");
+                updateScore("Question 2: Wrong! The correct answer is //.");
+            }
+        }
+        
+        const teesra = function() {
+            let ans = prompt("Which method is used to add an element at the end of an array in JavaScript?");
+            if (ans.toLowerCase() === "push") {
+                score += 1;
+                console.log("Bingo!");
+                updateScore("Question 3: Correct! push is the answer.");
+            } else {
+                console.log("Woops!");
+                updateScore("Question 3: Wrong! The correct answer is push.");
+            }
+        };
+        console.log("Trying to show what a hoisted variable is: " + x); 
+        var x = "I am hoisted!";
+        
+        const updateScore = (message) => {
+            const resultContainer = document.getElementById('results');
+            const newResult = document.createElement('p');
+            newResult.textContent = message;
+            resultContainer.appendChild(newResult);
+        };
+        
+        function startQuiz() {
+            document.getElementById('startButton').style.display = 'none';
+            document.getElementById('quizContent').style.display = 'block';
+            startTimer();
+            pehla();
+            doosra();
+            teesra();
+            endQuiz();
+        }
+        
+        function endQuiz() {
+            clearInterval(timerInterval);
+            const scoreDikhao = function() {
+                console.log(`Your final score is: ${score} / 3`);
+                const finalResult = document.getElementById('finalScore');
+                finalResult.textContent = `Your final score is: ${score} / 3`;
+                finalResult.style.display = 'block';
+            };
+            scoreDikhao();
+            
+            function scoreDikhaoButton() {
+                try {
+                    console.log(ans); 
+                } catch(error) {
+                    console.log("Answer ka scope idhar tak nhi h re baba");
+                    updateScore("Note: Variable scope demonstration - variables defined in functions are not accessible outside.");
+                }
+            }
+            scoreDikhaoButton();
+        }
+    </script>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Interactive JavaScript Concepts Quiz</h1>
+        <p>Test your knowledge while exploring JavaScript concepts!</p>
+        <p>Time remaining: <span id="timer" class="timer">60</span> seconds</p>
+        
+        <button id="startButton" onclick="startQuiz()">Start Quiz</button>
+        
+        <div id="quizContent" style="display: none;">
+            <div id="results"></div>
+            <div id="finalScore" class="result-display" style="display: none;"></div>
+        </div>
+    </div>
+
+    <h1>What I Learned from These Exercises</h1>
+    <div class="quiz-container">
+        <p>In this assignment, I explored several key JavaScript concepts that form the foundation of modern web development. <strong>Variables in JavaScript</strong> come in three forms: <code>var</code> (function-scoped and hoisted), <code>let</code> (block-scoped), and <code>const</code> (block-scoped with immutable binding). Understanding scope is crucial - local variables live only within their defined blocks, while global variables exist throughout the program execution.</p>
+        
+        <p>JavaScript offers tremendous flexibility in how we define functions:</p>
+        <ul>
+            <li><strong>Function Declarations</strong> - The classic approach with hoisting benefits allowing calls before definition</li>
+            <li><strong>Function Expressions</strong> - Functions assigned to variables, offering better encapsulation</li>
+            <li><strong>Anonymous Functions</strong> - Unnamed functions often used as callbacks or immediately invoked</li>
+            <li class="highlight"><strong>Arrow Functions</strong> - ES6 syntax with implicit returns and lexical <code>this</code> binding</li>
+        </ul>
+        
+        <p>The concept of <strong>hoisting</strong> is particularly interesting - JavaScript's behavior of moving declarations to the top of their scope during compilation. This explains why variables can sometimes be accessed before declaration, albeit as <code>undefined</code>.</p>
+        
+        <p>I also explored <strong>closures</strong> - a powerful mechanism where functions maintain access to their parent's scope even after the parent function has executed. This enables sophisticated patterns like data privacy, memoization, and module design patterns.</p>
+        
+        <p>The <strong>event loop</strong> and asynchronous programming model in JavaScript allows non-blocking execution, which is essential for responsive web applications. This is facilitated through callbacks, promises, and the modern async/await syntax.</p>
+        
+        <p>-Sarang R (1MS22CS168)</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Performance Analyzer</title>
+  <script>
+    console.log(subjectArea); 
+    var subjectArea = "Computer Science";
+    var studentName = ""; 
+    var scoresList = []; 
+    
+    function calculateTotal() {
+      return scoresList.length > 0 ? 
+        scoresList.reduce((total, current) => total + current, 0) : 0;
+    };
+    
+    const determinePerformance = function(total) {
+        return total > 45 ? "Outstanding" : 
+               total >= 35 ? "Excellent" : 
+               total >= 25 ? "Satisfactory" : 
+               "Needs Improvement";
+    };
+    
+    const calculateMean = function(data) {
+      if (data.length === 0) return 0;
+      return data.reduce((acc, val) => acc + val, 0) / data.length;
+    };
+    
+    function generateReport() {
+      const totalPoints = calculateTotal();
+      const meanScore = calculateMean(scoresList);
+      const performanceLevel = determinePerformance(totalPoints);
+      
+      function compileDetails() {
+        return `Student: ${studentName}
+Total Points: ${totalPoints}
+Mean Score: ${meanScore.toFixed(2)}
+Performance: ${performanceLevel}
+Percentile: ${calculatePercentile(totalPoints)}%
+Feedback: ${generateFeedback(performanceLevel)}`;
+      }
+      
+      function calculatePercentile(score) {
+        const maxPossible = scoresList.length * 25;
+        return Math.round((score / maxPossible) * 100);
+      }
+      
+      function generateFeedback(level) {
+        switch(level) {
+          case "Outstanding": return "Exceptional work! Keep it up!";
+          case "Excellent": return "Great progress! Almost there!";
+          case "Satisfactory": return "Good effort, but room for improvement.";
+          default: return "Let's work on improving these scores together.";
+        }
+      }
+      
+      return compileDetails();
+    }
+    
+    function handleFormSubmit(event) {
+      event.preventDefault(); 
+      studentName = document.getElementById('name').value;
+      const scoresInput = document.getElementById('numbers').value;
+      scoresList = scoresInput.split(',').map(score => Number(score.trim()));
+      const report = generateReport();
+      document.getElementById('output').innerText = report;
+    }
+  </script>
+</head>
+
+<body>
+  <h2>Student Activity Score Submission</h2>
+  <form onsubmit="handleFormSubmit(event)">
+    <label for="name">Name:</label><br/>
+    <input type="text" id="name" required /><br/><br/>
+
+    <label for="numbers">Scores:</label><br/>
+    <input type="text" id="numbers" placeholder="(No more than 4 entries)" required /><br/><br/>
+
+    <button type="submit">Check</button>
+  </form>
+
+  <h3>Report:</h3>
+  <pre id="output" style="background-color: #f0f0f0; padding: 10px;"></pre>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Exercises</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        h2 {
+            margin-top: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+        .exercise {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+        }
+        button {
+            padding: 5px 10px;
+            margin-top: 10px;
+        }
+        .exercise-description {
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        #console-output {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-top: 20px;
+            font-family: monospace;
+            height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>JavaScript Exercises</h1>
+    
+    <div class="exercise">
+        <h2>1. Number Functions</h2>
+        <div class="exercise-description">
+            Functions for squaring, halving numbers, calculating percentage, and area of circles.
+        </div>
+        <button onclick="loadScript('1.js')">Run Exercise</button>
+    </div>
+    
+    <div class="exercise">
+        <h2>2. MixUp</h2>
+        <div class="exercise-description">
+            Swaps the first two characters of two strings and concatenates them.
+        </div>
+        <button onclick="loadScript('2.js')">Run Exercise</button>
+    </div>
+    
+    <div class="exercise">
+        <h2>3. FixStart</h2>
+        <div class="exercise-description">
+            Replaces all occurrences of the first character with * (except the first character itself).
+        </div>
+        <button onclick="loadScript('3.js')">Run Exercise</button>
+    </div>
+    
+    <div class="exercise">
+        <h2>4. Verbing</h2>
+        <div class="exercise-description">
+            Adds 'ing' or 'ly' to the end of words based on specific rules.
+        </div>
+        <button onclick="loadScript('4.js')">Run Exercise</button>
+    </div>
+    
+    <div class="exercise">
+        <h2>5. Not Bad</h2>
+        <div class="exercise-description">
+            Replaces "not...bad" with "good" in sentences.
+        </div>
+        <button onclick="loadScript('5.js')">Run Exercise</button>
+    </div>
+    
+    <div class="exercise">
+        <h2>6. The Pluralizer</h2>
+        <div class="exercise-description">
+            Pluralizes nouns based on a number, handling irregular plurals.
+        </div>
+        <button onclick="loadScript('6.js')">Run Exercise</button>
+    </div>
+    
+    <div class="exercise">
+        <h2>7. The Array</h2>
+        <div class="exercise-description">
+            Displays choices with proper ordinal suffixes (1st, 2nd, 3rd, etc.).
+        </div>
+        <button onclick="loadScript('7.js')">Run Exercise</button>
+    </div>
+    
+    <div class="exercise">
+        <h2>8. Word Guessing Game</h2>
+        <div class="exercise-description">
+            A word guessing game with Wheel of Fortune and Hangman features.
+        </div>
+        <button onclick="loadScript('8.js')">Run Exercise</button>
+    </div>
+    
+    <div class="exercise">
+        <h2>9. The Recipe Card</h2>
+        <div class="exercise-description">
+            Creates and displays recipe information including title, servings, and ingredients.
+        </div>
+        <button onclick="loadScript('9.js')">Run Exercise</button>
+    </div>
+    
+    <div class="exercise">
+        <h2>10. The Reading List</h2>
+        <div class="exercise-description">
+            Tracks books you've read and want to read.
+        </div>
+        <button onclick="loadScript('10.js')">Run Exercise</button>
+    </div>
+    
+    <div class="exercise">
+        <h2>11. Movie Database</h2>
+        <div class="exercise-description">
+            Stores and displays movie information including title, duration, and stars.
+        </div>
+        <button onclick="loadScript('11.js')">Run Exercise</button>
+    </div>
+    
+    <div class="exercise">
+        <h2>12. Cash Register</h2>
+        <div class="exercise-description">
+            Calculates the total price of items in a shopping cart.
+        </div>
+        <button onclick="loadScript('12.js')">Run Exercise</button>
+    </div>
+    
+    <div class="exercise">
+        <h2>13. Credit Card Validation</h2>
+        <div class="exercise-description">
+            Validates credit card numbers based on specific rules.
+        </div>
+        <button onclick="loadScript('13.js')">Run Exercise</button>
+    </div>
+    
+    <p>Console Output:</p>
+    <div id="console-output"></div>
+    
+    <script>
+        // Store the original console.log function
+        const originalConsoleLog = console.log;
+        
+        // Override console.log to also display in our custom console
+        console.log = function() {
+            // Call the original console.log
+            originalConsoleLog.apply(console, arguments);
+            
+            // Add the log to our custom console
+            const consoleOutput = document.getElementById('console-output');
+            const logMessage = Array.from(arguments).join(' ');
+            
+            consoleOutput.innerHTML += logMessage + '<br>';
+            
+            // Auto-scroll to bottom
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        };
+        
+        // Function to load and run a script
+        function loadScript(scriptName) {
+            // Clear previous output
+            document.getElementById('console-output').innerHTML = `Running ${scriptName}...<br><br>`;
+            
+            // Remove previous script if exists
+            const existingScript = document.getElementById('current-script');
+            if (existingScript) {
+                existingScript.remove();
+            }
+            
+            // Create and load the new script
+            const script = document.createElement('script');
+            script.id = 'current-script';
+            script.src = scriptName;
+            document.body.appendChild(script);
+        }
+    </script>
+</body>
+</html>
